@@ -10,26 +10,29 @@ import (
 
 func main() {
 	// Feel free to use the main function for testing your functions
-	hello := map[string]string{
-		"hello":   "world",
-		"hola":    "mundo",
-		"bonjour": "monde",
-	}
-	for k, v := range hello {
-		fmt.Printf("%s, %s\n", strings.Title(k), v)
-	}
-	// fmt.Println(Fold([]int{1, 2, 3, 4}, 1, Multiply))
-	// person1 := NewPerson("Rakhat", "Zhumekin")
-	// person2 := NewPerson("First", "Last")
+	// hello := map[string]string{
+	// 	"hello":   "world",
+	// 	"hola":    "mundo",
+	// 	"bonjour": "monde",
+	// }
+	// for k, v := range hello {
+	// 	fmt.Printf("%s, %s\n", strings.Title(k), v)
+	// }
 
-	// var personSlice = make(PersonSlice, 0)
+	fmt.Println(Fold([]int{1, 2, 3, 4}, 1, Multiply))
 
-	// personSlice = append(personSlice, person1)
-	// personSlice = append(personSlice, person2)
+	person1 := NewPerson("Rakhat", "Zhumekin")
+	person2 := NewPerson("First", "Last")
 
-	// personSlice.Swap(0, 1)
+	var personSlice = make(PersonSlice, 0)
 
-	// fmt.Println(personSlice[0].FirstName)
+	personSlice = append(personSlice, person1)
+	personSlice = append(personSlice, person2)
+	personSlice = append(personSlice, person1)
+
+	fmt.Println("The length of the slice is", personSlice.Len())
+	fmt.Println("Is this a palindrome?", IsPalindrome(personSlice))
+
 }
 
 // Problem 1: Sorting Names
