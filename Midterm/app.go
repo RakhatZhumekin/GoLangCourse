@@ -74,5 +74,6 @@ func get(w http.ResponseWriter, r *http.Request) {
 	pair[key] = value
 
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(pair)
 }
