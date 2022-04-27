@@ -12,12 +12,14 @@ func main() {
 
 	if err != nil {
 		fmt.Println(err.Error())
+		os.Exit(1)
 	}
 
 	input := bufio.NewReader(os.Stdin)
 	response := bufio.NewReader(connection)
 
 	for {
+		fmt.Print("Write your name: ")
 		userLine, err := input.ReadBytes(byte('\n'))
 		if err != nil {
 			break

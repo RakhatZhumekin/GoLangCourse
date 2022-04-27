@@ -4,12 +4,14 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+	"os"
 )
 
 func main() {
 	listener, err := net.Listen("tcp", ":11037");
 	if err != nil {
 		fmt.Println(err.Error())
+		os.Exit(1)
 	}
 
 	defer listener.Close()
@@ -18,6 +20,7 @@ func main() {
 		connection, err := listener.Accept()
 		if err != nil {
 			fmt.Println(err.Error())
+			break
 		}
 
 		for {
