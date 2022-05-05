@@ -46,7 +46,7 @@ func (j *jwtService) GenerateToken(UserID string) string {
 			ExpiresAt: time.Now().Add(time.Minute * 15).Unix(),
 			Issuer: j.issuer,
 			IssuedAt: time.Now().Unix(),
-		}
+		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
