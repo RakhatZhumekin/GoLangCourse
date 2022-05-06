@@ -3,6 +3,8 @@ package main
 import (
 	"hw0/Final/config"
 	"hw0/Final/controller"
+	"hw0/Final/repository"
+	"hw0/Final/service"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -10,7 +12,10 @@ import (
 
 var (
 	db *gorm.DB = config.SetupDatabaseConnection()
-	authController controller.AuthController = controller.NewAuthController()
+	userRepository repository.UserRepository = repository.NewUserRepository(db)
+	jwtService service.JWTService = service.NewJWTService()
+	authService service.AuthService = service.NewAuthService(userRepository)
+	authController controller.AuthController = controller.NewAuthController(authService, jwtService)
 )
 
 func main() {

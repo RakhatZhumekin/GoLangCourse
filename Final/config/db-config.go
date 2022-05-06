@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"hw0/Final/entity"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -27,6 +28,7 @@ func SetupDatabaseConnection() *gorm.DB {
 		panic("Database connection failed")
 	}
 
+	db.AutoMigrate(&entity.User{})
 	return db
 }
 
