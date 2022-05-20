@@ -20,12 +20,14 @@ type UserController interface {
 type userController struct {
 	userService service.UserService
 	jwtService service.JWTService
+	emailConfirmatinService service.EmailConfirmationService
 }
 
-func NewUserController(userService service.UserService, jwtService service.JWTService) UserController {
+func NewUserController(userService service.UserService, jwtService service.JWTService, emailConfirmatinService service.EmailConfirmationService) UserController {
 	return &userController {
 		userService,
 		jwtService,
+		emailConfirmatinService,
 	}
 }
 
@@ -51,6 +53,9 @@ func (c *userController) Update(ctx *gin.Context) {
 	}
 
 	userUpdateDTO.ID = id
+
+	userUpdateDTO.Verified = c.userService.Profile(fmt.Sprintf("%v", claims["user_id"])).Verified
+
 	u := c.userService.Update(userUpdateDTO)
 	res := helper.BuildResponse(true, "OK!", u)
 	ctx.JSON(http.StatusOK, res)

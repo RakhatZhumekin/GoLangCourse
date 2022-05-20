@@ -17,8 +17,9 @@ var (
 	jwtService service.JWTService = service.NewJWTService()
 	userService service.UserService = service.NewUserService(userRepository)
 	authService service.AuthService = service.NewAuthService(userRepository)
-	authController controller.AuthController = controller.NewAuthController(authService, jwtService)
-	userController controller.UserController = controller.NewUserController(userService, jwtService)
+	emailConfirmationService service.EmailConfirmationService = service.NewEmailConfirmationService()
+	authController controller.AuthController = controller.NewAuthController(authService, jwtService, userService, emailConfirmationService)
+	userController controller.UserController = controller.NewUserController(userService, jwtService, emailConfirmationService)
 )
 
 func main() {
@@ -29,6 +30,7 @@ func main() {
 	{
 		authRoutes.POST("/login", authController.Login)
 		authRoutes.POST("/register", authController.Register)
+		authRoutes.POST("/registration-confirm", authController.RegistrationConfirm)
 	}
 
 	userRoutes := r.Group("api/user", middleware.AuthorizeJWT(jwtService))

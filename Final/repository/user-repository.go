@@ -12,6 +12,7 @@ type UserRepository interface {
 	InsertUser(user entity.User) entity.User
 	UpdateUser(user entity.User) entity.User
 	VerifyCredential(email string, password string) interface{}
+	VerifyVerification(email string) bool
 	IsDuplicateEmail(email string) (tx *gorm.DB)
 	FindByEmail(email string) entity.User
 	ProfileUser(userID string) entity.User
@@ -34,6 +35,7 @@ func (db *userConnection) InsertUser(user entity.User) entity.User {
 }
 
 func (db *userConnection) UpdateUser(user entity.User) entity.User {
+
 	if user.Password != "" {
 		user.Password = hashAndSalt([]byte(user.Password))
 	} else {
@@ -43,6 +45,7 @@ func (db *userConnection) UpdateUser(user entity.User) entity.User {
 	}
 	
 	db.connection.Save(&user)
+
 	return user
 }
 
@@ -54,6 +57,11 @@ func (db *userConnection) VerifyCredential(email string, password string) interf
 	}
 
 	return nil
+}
+
+func (db *userConnection) VerifyVerification(email string) bool {
+	user := db.FindByEmail(email)
+	return user.Verified
 }
 
 func (db *userConnection) IsDuplicateEmail(email string) (tx *gorm.DB) {
@@ -69,7 +77,7 @@ func (db *userConnection) FindByEmail(email string) entity.User {
 
 func (db *userConnection) ProfileUser(userID string) entity.User {
 	var user entity.User
-	db.connection.Preload("users").Find(&user, userID)
+	db.connection.Where("id = ?", userID).Take(&user)
 	return user
 }
 
