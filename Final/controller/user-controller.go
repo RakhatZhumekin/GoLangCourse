@@ -5,8 +5,10 @@ import (
 	"hw0/Final/dto"
 	"hw0/Final/helper"
 	"hw0/Final/service"
+	"math/rand"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
@@ -20,14 +22,14 @@ type UserController interface {
 type userController struct {
 	userService service.UserService
 	jwtService service.JWTService
-	emailConfirmatinService service.EmailConfirmationService
+	emailConfirmationService service.EmailConfirmationService
 }
 
-func NewUserController(userService service.UserService, jwtService service.JWTService, emailConfirmatinService service.EmailConfirmationService) UserController {
+func NewUserController(userService service.UserService, jwtService service.JWTService, emailConfirmationService service.EmailConfirmationService) UserController {
 	return &userController {
 		userService,
 		jwtService,
-		emailConfirmatinService,
+		emailConfirmationService,
 	}
 }
 
@@ -53,11 +55,33 @@ func (c *userController) Update(ctx *gin.Context) {
 	}
 
 	userUpdateDTO.ID = id
+	okText := "OK!"
 
-	userUpdateDTO.Verified = c.userService.Profile(fmt.Sprintf("%v", claims["user_id"])).Verified
+	if userUpdateDTO.Name == "" {
+		userUpdateDTO.Name = c.userService.Profile(fmt.Sprintf("%v", claims["user_id"])).Name
+	}
 
+	if userUpdateDTO.Email == "" {
+		userUpdateDTO.Email = c.userService.Profile(fmt.Sprintf("%v", claims["user_id"])).Email
+		userUpdateDTO.Verified = c.userService.Profile(fmt.Sprintf("%v", claims["user_id"])).Verified
+	} else {
+		rand.Seed(time.Now().UnixNano())
+		Rn = rand.Intn(100000)
+
+		err := c.emailConfirmationService.SendVerificationCode(Rn, userUpdateDTO.Email)
+
+		if err != nil {
+			response := helper.BuildErrorResponse("Failed to process request", err.Error(), helper.EmptyObj{})
+			ctx.AbortWithStatusJSON(http.StatusBadRequest, response)
+			return
+		}
+
+		okText = "OK! Check your email for verification code"
+		userUpdateDTO.Verified = false
+	}
+	
 	u := c.userService.Update(userUpdateDTO)
-	res := helper.BuildResponse(true, "OK!", u)
+	res := helper.BuildResponse(true, okText, u)
 	ctx.JSON(http.StatusOK, res)
 }
 

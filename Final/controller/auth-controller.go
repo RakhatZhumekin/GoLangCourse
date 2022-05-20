@@ -15,7 +15,7 @@ import (
 	"github.com/mashingan/smapping"
 )
 
-var rn = 0
+var Rn = 0
 
 type AuthController interface {
 	Login(ctx *gin.Context)
@@ -85,9 +85,9 @@ func (c *authController) Register(ctx *gin.Context) {
 		createdUser.Token = token
 
 		rand.Seed(time.Now().UnixNano())
-		rn = rand.Intn(100000)
+		Rn = rand.Intn(100000)
 
-		err := c.emailConfirmationService.SendVerificationCode(rn, createdUser.Email)
+		err := c.emailConfirmationService.SendVerificationCode(Rn, createdUser.Email)
 
 		if err != nil {
 			response := helper.BuildErrorResponse("Failed to process request", err.Error(), helper.EmptyObj{})
@@ -95,7 +95,7 @@ func (c *authController) Register(ctx *gin.Context) {
 			return
 		}
 
-		response := helper.BuildResponse(true, "OK! Check your email", createdUser)
+		response := helper.BuildResponse(true, "OK! Check your email for verification code", createdUser)
 		ctx.JSON(http.StatusCreated, response)
 	}
 }
@@ -110,7 +110,7 @@ func (c *authController) RegistrationConfirm(ctx *gin.Context) {
 		return
 	}
 
-	if emailVerificationDTO.Verification == strconv.Itoa(rn) {
+	if emailVerificationDTO.Verification == strconv.Itoa(Rn) {
 		verifyingUser := c.authService.FindByEmail(emailVerificationDTO.Email)
 		verifyingUser.Verified = true
 
