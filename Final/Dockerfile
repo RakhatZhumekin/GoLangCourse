@@ -18,4 +18,4 @@ RUN CGO_ENABLED=0 go build
 
 EXPOSE 11037
 
-CMD ["./Final.exe"]
+CMD ["./Final"]

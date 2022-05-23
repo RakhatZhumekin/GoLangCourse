@@ -11,14 +11,17 @@ services:
     environment:
       - MYSQL_DB=${DB_NAME}
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - MYSQL_HOST=${DB_HOST}
+      - PORT=3306
     ports:
       - 3306:3306
+    volumes:
+      - ./config/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   app:
     build: 
       context: .
       dockerfile: ./Dockerfile
+    restart: on-failure
     ports:
       - 11037:11037
     networks:
@@ -30,7 +33,6 @@ services:
     environment:
       - MYSQL_DB=${DB_NAME}
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - MYSQL_HOST=${DB_HOST}
 
 networks:
   backend:
