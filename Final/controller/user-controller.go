@@ -2,13 +2,14 @@ package controller
 
 import (
 	"fmt"
-	"hw0/Final/dto"
-	"hw0/Final/helper"
-	"hw0/Final/service"
 	"math/rand"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/dto"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/helper"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"

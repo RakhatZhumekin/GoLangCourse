@@ -2,8 +2,9 @@ package config
 
 import (
 	"fmt"
-	"hw0/Final/entity"
 	"os"
+
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/entity"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"

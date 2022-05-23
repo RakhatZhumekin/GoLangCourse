@@ -1,15 +1,16 @@
 package controller
 
 import (
-	"hw0/Final/dto"
-	"hw0/Final/entity"
-	"hw0/Final/helper"
-	"hw0/Final/service"
 	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/dto"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/entity"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/helper"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mashingan/smapping"

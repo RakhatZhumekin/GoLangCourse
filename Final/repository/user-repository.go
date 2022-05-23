@@ -1,8 +1,9 @@
 package repository
 
 import (
-	"hw0/Final/entity"
 	"log"
+
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/entity"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"

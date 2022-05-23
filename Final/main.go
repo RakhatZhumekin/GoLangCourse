@@ -1,11 +1,13 @@
 package main
 
 import (
-	"hw0/Final/config"
-	"hw0/Final/controller"
-	"hw0/Final/middleware"
-	"hw0/Final/repository"
-	"hw0/Final/service"
+	"os"
+
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/config"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/controller"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/middleware"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/repository"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/service"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -39,5 +41,5 @@ func main() {
 		userRoutes.PUT("/profile", userController.Update)
 	}
 	
-	r.Run(":11037")
+	r.Run(":" + os.Getenv("PORT"))
 }

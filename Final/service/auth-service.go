@@ -1,10 +1,11 @@
 package service
 
 import (
-	"hw0/Final/dto"
-	"hw0/Final/entity"
-	"hw0/Final/repository"
 	"log"
+
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/dto"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/entity"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/repository"
 
 	"github.com/mashingan/smapping"
 	"golang.org/x/crypto/bcrypt"

@@ -1,10 +1,11 @@
 package middleware
 
 import (
-	"hw0/Final/helper"
-	"hw0/Final/service"
 	"log"
 	"net/http"
+
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/helper"
+	"github.com/RakhatZhumekin/GoLangCourse/tree/main/Final/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
